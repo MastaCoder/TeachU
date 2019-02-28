@@ -1,0 +1,20 @@
+body {
+    overflow-x: hidden;
+    min-height: 100%;
+    position: relative;
+    padding-bottom: 16rem;
+}
+
+.signup_button {
+    font-size: 15px;
+    padding: 12px;
+}
+
+.page-footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #efefef;
+    text-align: center;
+}
