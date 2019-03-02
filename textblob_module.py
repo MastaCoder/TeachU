@@ -1,9 +1,8 @@
-import nltk
-from textblob import Word
+"""
+textimput and textoutput are str variables defined in the main() function
+"""
+
 from textblob import TextBlob
-import sys
-from http.server import HTTPServer, BaseHTTPRequestHandler
-from io import BytesIO
 
 
 def parse(string):
@@ -13,9 +12,12 @@ def parse(string):
 
     try:
         txt = TextBlob(string)
+        all_questions = ''
         # Each sentence is taken from the string input and passed to genQuestion() to generate questions.
         for sentence in txt.sentences:
-            genQuestion(sentence)
+            questions = genQuestion(sentence)
+            all_questions += questions
+        return all_questions
 
     except Exception as e:
         raise e
@@ -84,24 +86,20 @@ def genQuestion(line):
            l1):  # 'NNP', 'VBG', 'VBZ', 'IN' in sentence.
         question = 'What' + ' ' + line.words[bucket['VBZ']] + ' ' + line.words[
             bucket['NNP']] + ' ' + line.words[bucket['VBG']] + '?'
-        answer = bucket['IN']
 
     elif all(key in bucket for key in l2):  # 'NNP', 'VBG', 'VBZ' in sentence.
         question = 'What' + ' ' + line.words[bucket['VBZ']] + ' ' + line.words[
             bucket['NNP']] + ' ' + line.words[bucket['VBG']] + '?'
-        answer = line.words[bucket['VBZ']]
 
     elif all(key in bucket for key in
              l3):  # 'PRP', 'VBG', 'VBZ', 'IN' in sentence.
         question = 'What' + ' ' + line.words[bucket['VBZ']] + ' ' + line.words[
             bucket['PRP']] + ' ' + line.words[bucket['VBG']] + '?'
-        answer = line.words[bucket['VBZ']]
 
     elif all(key in bucket for key in l4):  # 'PRP', 'VBG', 'VBZ' in sentence.
         question = 'What ' + line.words[bucket['PRP']] + ' ' + ' does ' + \
                    line.words[bucket['VBG']] + ' ' + line.words[
                        bucket['VBG']] + '?'
-        answer = line.words[bucket['VBZ']]
 
     elif all(key in bucket for key in l7):  # 'NN', 'VBG', 'VBZ' in sentence.
         question = 'What' + ' ' + line.words[bucket['VBZ']] + ' ' + line.words[
@@ -110,19 +108,16 @@ def genQuestion(line):
     elif all(key in bucket for key in l8):  # 'NNP', 'VBZ', 'JJ' in sentence.
         question = 'What' + ' ' + line.words[bucket['VBZ']] + ' ' + line.words[
             bucket['NNP']] + '?'
-        answer = line.words[bucket['JJ']]
 
     elif all(key in bucket for key in l9):  # 'NNP', 'VBZ', 'NN' in sentence
         question = 'What' + ' ' + line.words[bucket['VBZ']] + ' ' + line.words[
             bucket['NNP']] + '?'
-        answer = line.words[bucket['NN']]
 
     elif all(key in bucket for key in l11):  # 'PRP', 'VBZ' in sentence.
         if line.words[bucket['PRP']] in ['she', 'he']:
             question = 'What' + ' does ' + line.words[
                 bucket['PRP']].lower() + ' ' + line.words[
                            bucket['VBZ']].singularize() + '?'
-            answer = line.words[bucket['VBZ']]
 
     elif all(key in bucket for key in l10):  # 'NNP', 'VBZ' in sentence.
         question = 'What' + ' does ' + line.words[bucket['NNP']] + ' ' + \
@@ -137,8 +132,10 @@ def genQuestion(line):
         question = question.replace(" ’ ", "'s ")
 
     # Print the genetated questions as output.
+    questions_string = ''
     if question != '':
-        print('\n', 'Question: ' + question)
+        questions_string += ('Question: ' + question + '\n')
+    return questions_string
 
 
 def main():
@@ -149,12 +146,6 @@ def main():
     global verbose
     verbose = False
 
-    # Set verbose if -v option is given as argument.
-    if len(sys.argv) >= 3:
-        if sys.argv[2] == '-v':
-            print('Verbose Mode Activated\n')
-            verbose = True
-
     # Open the file given as argument in read-only mode.
     with open("notes", encoding="utf8") as file:
         textinput = file.read()
@@ -163,7 +154,8 @@ def main():
     print('\n-----------INPUT END---------------\n')
 
     # Send the content of text file as string to function parse()
-    parse(textinput)
+    textoutput = parse(textinput)
+    print(textoutput)
 
 
 if __name__ == "__main__":
