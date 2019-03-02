@@ -11,7 +11,7 @@
     <!-- Page CSS -->
     <link href="assets/css/global.css" rel="stylesheet">
     <!-- Page CSS -->
-    <link href="assets/css/register.css" rel="stylesheet">
+    <link href="assets/css/dashboard.css" rel="stylesheet">
 </head>
 
 <body>
@@ -25,65 +25,51 @@
     <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">Home</a>
+                <a class="nav-link" href="index.html">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="create.html">Create</a>
             </li>
         </ul>
         <span class="navbar-text white-text">
-            <a href="login.html" class="mr-2">Login</a>
-            <a type="button" class="btn btn-success signup_button" href="register.html">Sign Up</a>
+            <a href="settings.html" class="mr-2">Settings</a>
+            <a type="button" class="btn btn-danger signup_button" href="index.html">Logout</a>
         </span>
     </div>
 </nav>
 
-<div class="row justify-content-center mt-5">
-    <div class="col-4">
-        <div class="card">
-            <h5 class="card-header blue-grey darken-2 white-text text-center py-4">
-                <strong>Sign up</strong>
-            </h5>
-            <div class="card-body px-lg-5 pt-0">
-                <div class="text-center" style="color: #757575;">
-                    <div class="form-row">
-                        <div class="col">
-                            <div class="md-form">
-                                <input type="text" id="materialRegisterFormFirstName" class="form-control">
-                                <label for="materialRegisterFormFirstName">First name</label>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="md-form">
-                                <input type="email" id="materialRegisterFormLastName" class="form-control">
-                                <label for="materialRegisterFormLastName">Last name</label>
-                            </div>
-                        </div>
+<div class="text-center">
+    <h1 class="welcomeback">Welcome back, Makan.</h1>
+    <h2>How's the studying going?</h2>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-2">
+            <div class="card">
+                <a href="create.html">
+                    <div class="card-content text-center">
+                        <h1 class="bigicon"><i class="fas fa-plus-circle"></i></h1>
+                        <h4 class="mb-3">Create</h4>
                     </div>
-                    <div class="md-form mt-0">
-                        <input type="email" id="materialRegisterFormEmail" class="form-control">
-                        <label for="materialRegisterFormEmail">E-mail</label>
+                </a>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="card">
+                <a href="create.html">
+                    <div class="card-content text-center">
+                        <h1 class="bigicon"><i class="fas fa-envelope-open-text"></i></h1>
+                        <h4 class="mb-3">Practice</h4>
                     </div>
-                    <div class="md-form">
-                        <input type="password" id="materialRegisterFormPassword" class="form-control" aria-describedby="materialRegisterFormPasswordHelpBlock">
-                        <label for="materialRegisterFormPassword">Password</label>
-                        <small id="materialRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
-                        At least 8 characters and 1 digit
-                        </small>
-                    </div>
-                    <div class="md-form">
-                        <input type="password" id="materialRegisterFormPhone" class="form-control" aria-describedby="materialRegisterFormPhoneHelpBlock">
-                        <label for="materialRegisterFormPhone">Phone number</label>
-                        <small id="materialRegisterFormPhoneHelpBlock" class="form-text text-muted mb-4">
-                        Optional - for two step authentication
-                        </small>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="materialRegisterFormNewsletter">
-                        <label class="form-check-label" for="materialRegisterFormNewsletter">Subscribe to our newsletter</label>
-                    </div>
-                    <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" onclick="toastr.success('You have successfully signed up! You can sign in with your account now, welcome to TeachU.');">Sign Up</button>
-                    <hr>
-                    <p>By clicking
-                        Sign up you agree to our
-                        <a href="" target="_blank">terms of service</a>
+                </a>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="card">
+                <div class="card-content text-center">
+                    <h1 class="bigicon"><i class="fas fa-font"></i></h1>
+                    <h4 class="mb-3">Test (Soon)</h4>
                 </div>
             </div>
         </div>
