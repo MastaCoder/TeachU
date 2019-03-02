@@ -122,7 +122,7 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         content_length = int(self.headers['Content-Length'])
         body = self.rfile.read(content_length)
         response = BytesIO()
-        print(body.decode('utf-8'))
+        #print(body.decode('utf-8'))
         response.write(b'{"0":""')
         count = 0
         for a in parsee(body.decode('utf-8')):
