@@ -42,17 +42,17 @@
 </nav>
 
 <div class="text-center mb-5">
-    <h1 class="large-text">Time to create.</h1>
-    <h2>Paste in your notes to create a test!</h2>
+    <h1 class="large-text" id="title">Time to create.</h1>
+    <h2 id="sub">Paste in your notes to create a test!</h2>
 </div>
 
-<div class="container mt-4">
+<div class="container mt-4" id="fill">
     <div class="md-form">
-        <textarea type="text" id="form7" class="md-textarea form-control" rows="15"></textarea>
+        <textarea type="text" id="form" class="md-textarea form-control" rows="15"></textarea>
         <label for="form7">Notes</label>
     </div>
     <div class="text-center">
-        <a class="btn btn-success">Create</a>
+        <a class="btn btn-success" id="done">Create</a>
     </div>
 </div>
 
@@ -115,6 +115,39 @@
 <script type="text/javascript" src="https://makan.bz/cdn/mdbootstrap/js/mdb.min.js"></script>
 <!-- Particles.js -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+<script>
+    $("#done").click(function() {
+        // Send request to server.
+        $.post("http://localhost:8000", $("#form").val())
+
+        // Returned info.
+        .done(function(data) {
+            var questions = JSON.parse(data)
+            var fill = "";
+            if (Object.keys(questions).length == 1) {
+                toastr.error('Failed to find questions, try something else.');
+            } else {
+                for (question in questions) {
+                    if (questions[question]) {
+                        fill += `
+                        <div class="md-form form-lg mt-5">
+                            <input type="text" class="form-control form-control-lg">
+                            <label for="inputLGEx">` + questions[question] + `</label>
+                            <p class="float-right"><a href="#">Can't understand the question!</a></p>
+                        </div>`;
+                    }
+                }
+                $("#title").html("Let's Practice!");
+                $("#sub").html("How well can you do?");
+                fill += `<div class="text-center">
+                    <a href="dashboard.html" class="btn btn-success">Done</a>
+                </div>`;
+                $("#fill").html(fill);
+            }
+        });
+    })
+</script>
 
 </body>
 </html>
