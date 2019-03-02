@@ -147,7 +147,7 @@ def main():
     """
     # verbose mode is activated when we give -v as argument.
     global verbose
-    verbose = True
+    verbose = False
 
     # Set verbose if -v option is given as argument.
     if len(sys.argv) >= 3:
@@ -156,7 +156,7 @@ def main():
             verbose = True
 
     # Open the file given as argument in read-only mode.
-    with open("Makan's notes", encoding="utf8") as file:
+    with open("notes", encoding="utf8") as file:
         textinput = file.read()
     print('\n-----------INPUT TEXT-------------\n')
     print(textinput, '\n')
