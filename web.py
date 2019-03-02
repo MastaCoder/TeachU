@@ -114,17 +114,25 @@ from io import BytesIO
 import json
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
+    def send_my_headers(self):
+        self.send_header("Access-Control-Allow-Origin", "*")
+        
     def do_POST(self):
+        
         content_length = int(self.headers['Content-Length'])
         body = self.rfile.read(content_length)
         response = BytesIO()
-        response.write(b'{""')
+        print(body.decode('utf-8'))
+        response.write(b'{"0":""')
+        count = 0
         for a in parsee(body.decode('utf-8')):
-            response.write(b',"')
+            count += 1
+            response.write((',"' + str(count) + '":"').encode('utf-8'))
             response.write(a.encode('utf-8'))
             response.write(b'"')
         response.write(b'}')
         self.send_response(200)
+        self.send_header('Access-Control-Allow-Origin', '*')  
         self.end_headers()
         self.wfile.write(response.getvalue())
 
