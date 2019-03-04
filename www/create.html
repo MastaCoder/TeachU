@@ -124,17 +124,20 @@
         // Returned info.
         .done(function(data) {
             var questions = JSON.parse(data)
+            var printed = [];
             var fill = "";
             if (Object.keys(questions).length == 1) {
                 toastr.error('Failed to find questions, try something else.');
             } else {
                 for (question in questions) {
-                    if (questions[question]) {
+                    if (questions[question] && !printed.includes(questions[question])) {
+                        printed.push(questions[question]);
+                        console.log(printed);
                         fill += `
                         <div class="md-form form-lg mt-5">
                             <input type="text" class="form-control form-control-lg">
                             <label for="inputLGEx">` + questions[question] + `</label>
-                            <p class="float-right"><a href="#">Can't understand the question!</a></p>
+                            <p class="float-right"><a href="#" onclick="$(this).closest('div').remove();">Can't understand the question!</a></p>
                         </div>`;
                     }
                 }
