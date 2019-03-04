@@ -1,9 +1,17 @@
 # Two question types: Questions based on information given in the text and
 # questions based on keywords (For future continuation)
 from textblob import TextBlob
+import re
 
 
 NOUNS = ["NN", "NNS", "NNP", "NNPS", "PRP"]
+
+
+class Clause:
+    def __init__(self, string, tags, clause_type):
+        self.string = string
+        self.tags = tags
+        self.type = clause_type
 
 
 # Class that maps each sentence into an object with different types of clauses
@@ -12,11 +20,38 @@ class Sentence:
         self.sentence = sentence
         self.tags = sentence.tags
         # Current index position in words list
-        self.pos = 0
+        self.clauses = []
         self.main_clause = []
         self.claux_list = []
         self.incr_value = 0
-        self.process()
+        self.pos = 0
+
+    def get_clauses(self):
+        print(self.sentence)
+        clauses = re.split('; |, | :', str(self.sentence))
+        true_clauses = []
+        index = 0
+        # Sorting through clauses
+        for clause in clauses:
+            clause_tags = []
+            clause_words = clause.split(" ")
+            # Getting tags
+            for word in clause_words:
+                tag = self.sentence.tags[clause_words.index(word) + index]
+                clause_tags.append(tag)
+            # Whether clause is independent or dependent
+            if clause_tags[0][1] == "IN":
+                clause_type = "DEP"
+            else:
+                clause_type = "IND"
+            clause_object = Clause(clause, clause_tags, clause_type)
+            self.clauses.append(clause_object)
+            index += len(clause_words)
+        # Debugging
+        # for clause in self.clauses:
+            # print(clause.string)
+            # print(clause.tags)
+            # print(clause.type)
 
     # Y'all know how python testing is lmao
     def incr(self):
@@ -68,6 +103,9 @@ class Sentence:
             claux.append(tag)
             self.pos += 1
 
+    def gen_questions(self):
+        self.process()
+
     # Regurgitate sentence map
     def regurg(self):
         main_clause = ' '.join([word for word, pos in self.main_clause])
@@ -84,7 +122,7 @@ def parse_sentences(string):
     txt = TextBlob(string)
     for sentence in txt.sentences:
         s_map = Sentence(sentence)
-        s_map.regurg()
+        s_map.get_clauses()
 
 
 with open('notes2', encoding="utf8") as file:
