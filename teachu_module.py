@@ -26,10 +26,12 @@ class Sentence:
         self.incr_value = 0
         self.pos = 0
 
+    """
+    Model 2
+    """
+
     def get_clauses(self):
-        print(self.sentence)
         clauses = re.split('; |, | :', str(self.sentence))
-        true_clauses = []
         index = 0
         # Sorting through clauses
         for clause in clauses:
@@ -48,10 +50,14 @@ class Sentence:
             self.clauses.append(clause_object)
             index += len(clause_words)
         # Debugging
-        # for clause in self.clauses:
-            # print(clause.string)
-            # print(clause.tags)
-            # print(clause.type)
+        for clause in self.clauses:
+             print(clause.string)
+             print(clause.tags)
+             print(clause.type)
+
+    """
+    Model 1
+    """
 
     # Y'all know how python testing is lmao
     def incr(self):
@@ -125,7 +131,7 @@ def parse_sentences(string):
         s_map.get_clauses()
 
 
-with open('notes2', encoding="utf8") as file:
+with open('notes3', encoding="utf8") as file:
     notes = file.read()
 
 parse_sentences(notes)
